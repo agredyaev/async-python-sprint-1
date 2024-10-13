@@ -9,7 +9,7 @@
 <details>
 <summary> Описание </summary>
 
-Список городов находится в переменной `CITIES` в файле [utils.py](utils.py). Для взаимодействия с API используйте готовый класс `YandexWeatherAPI` в модуле `external/client.py`. Пример работы с классом `YandexWeatherAPI` описан в <a href="#apiusingexample">примере</a>. Пример ответа от API для анализа вы найдёте в [файле](examples/response.json).
+Список городов находится в переменной `CITIES` в файле [utils.py](src/helpers/get_json_data.py). Для взаимодействия с API используйте готовый класс `YandexWeatherAPI` в модуле `external/client.py`. Пример работы с классом `YandexWeatherAPI` описан в <a href="#apiusingexample">примере</a>. Пример ответа от API для анализа вы найдёте в [файле](src/examples/response.json).
 
 </details>
 
@@ -25,9 +25,9 @@
 - информация о температуре для указанного дня за определённый час находится по следующему пути: `forecasts> [день]> hours> temp`;
 - информация об осадках для указанного дня за определённый час находится по следующему пути: `forecasts> [день]> hours> condition`.
 
-[Пример данных](examples/response-day-info.png) с информацией о температуре и осадках за день.
+[Пример данных](src/examples/response-day-info.png) с информацией о температуре и осадках за день.
 
-Список вариантов погодных условий находится [в таблице в блоке `condition`](https://yandex.ru/dev/weather/doc/dg/concepts/forecast-test.html#resp-format__forecasts) или в [файле](examples/conditions.txt).
+Список вариантов погодных условий находится [в таблице в блоке `condition`](https://yandex.ru/dev/weather/doc/dg/concepts/forecast-test.html#resp-format__forecasts) или в [файле](src/examples/conditions.txt).
 
 Для анализа данных используйте подготовленный скрипт в модуле `external/analyzer.py`. Скрипт имеет два параметра запуска:
 - `-i` – путь до файла с данными, как результат ответа от `YandexWeatherAPI` в формате `json`;
@@ -38,7 +38,7 @@
 python3 external/analyzer.py -i examples/response.json -o output.json
 ```
 
-[Пример данных](examples/output.json) с информацией об анализе данных для одного города за период времени, указанный во входном файле.
+[Пример данных](src/examples/output.json) с информацией об анализе данных для одного города за период времени, указанный во входном файле.
 
 
 </details>
@@ -77,7 +77,7 @@ python3 external/analyzer.py -i examples/response.json -o output.json
 
 1. Используйте для решения как процессы, так и потоки. Для этого разделите все задачи по их типу – IO-bound или CPU-bound.
 2. Используйте для решения и очередь, и пул задач.
-3. Опишите этапы решения в виде отдельных классов в модуле [tasks.py](tasks.py):
+3. Опишите этапы решения в виде отдельных классов в модуле [tasks.py](src/pipeline/tasks.py):
   - `DataFetchingTask` — получение данных через API;
   - `DataCalculationTask` — вычисление погодных параметров;
   - `DataAggregationTask` — объединение вычисленных данных;
@@ -91,7 +91,7 @@ python3 external/analyzer.py -i examples/response.json -o output.json
 
 ## Рекомендации к решению
 
-1. Предусмотрите и обработайте ситуации с некорректным обращением к внешнему API: отсутствующая/битая ссылка, неверный ответ, невалидное содержимое или иной формат ответа.  
+1. Предусмотрите и обработайте ситуации с некорректным обращением к внешнему API: отсутствующая/битая ссылка, неверный ответ, невалидное содержимое или иной формат ответа.
 2. Покройте написанный код тестами.
 3. Используйте таймауты для ограничения времени выполнения частей программы и принудительного завершения при зависаниях или нештатных ситуациях.
 
@@ -103,8 +103,8 @@ python3 external/analyzer.py -i examples/response.json -o output.json
 ## Пример использования `YandexWeatherAPI` для работы с API
 
 ```python
-from external.client import YandexWeatherAPI
-from utils import get_url_by_city_name
+from src.external import YandexWeatherAPI
+from src.helpers.get_json_data import get_url_by_city_name
 
 city_name = "MOSCOW"
 url_with_data = get_url_by_city_name(city_name)
