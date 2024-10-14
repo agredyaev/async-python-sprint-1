@@ -111,4 +111,4 @@ cython_debug/
 mypy_cache/
 ruff_cache/
 
-output.json # for analyzer
+output.json

@@ -6,11 +6,14 @@ env:
 		cp "$$file" "$$(dirname $$file)/.env"; \
 	done
 
+
 .PHONY: sync
 sync:
-	@curl -LsSf https://astral.sh/uv/install.sh | sh
-	@uv venv
 	@uv sync --frozen --all-extras
+
+.PHONY: setup
+setup:
+	@curl -LsSf https://astral.sh/uv/install.sh | sh
 
 .PHONY: upd_hooks
 upd_hooks:
@@ -21,3 +24,14 @@ upd_hooks:
 check:
 	@git add .
 	@pre-commit run
+
+.PHONY: up
+up: env setup sync
+
+.PHONY: run
+run: sync env
+	@python -m src.main
+
+.PHONY: test
+test:
+	pytest
