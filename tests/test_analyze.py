@@ -6,12 +6,6 @@ from src.pipeline.analyze import AnalyzeTask
 from src.schemas.dto import TransformedDayDTO, TransformTaskDTO
 
 
-@pytest.fixture(autouse=True)
-def set_env_vars(monkeypatch):
-    monkeypatch.setenv("PYTHON_VER_MIN_MAJOR", "3")
-    monkeypatch.setenv("PYTHON_VER_MIN_MINOR", "9")
-
-
 @pytest.fixture
 def mock_transformed_data():
     return [
