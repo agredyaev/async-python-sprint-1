@@ -14,8 +14,8 @@ class DefaultSettings(BaseSettings):
 class PythonVersionSettings(DefaultSettings):
     """Class to store Python version settings."""
 
-    min_major: int = Field(default=3, description="Minimum major version")
-    min_minor: int = Field(default=9, description="Minimum minor version")
+    min_major: int = Field(..., description="Minimum major version")
+    min_minor: int = Field(..., description="Minimum minor version")
 
     model_config = SettingsConfigDict(env_prefix="PYTHON_VER_")
 

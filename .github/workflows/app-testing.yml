@@ -56,40 +56,45 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-      # 2. Set up the Python environment
+      # 2. Copy .env.example to .env
+    - name: Copy .env.example to .env
+      run: |
+        сp .env.example .env
+
+      # 3. Set up the Python environment
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
-      # 3. Install uv
+      # 4. Install uv
     - name: Install uv
       uses: astral-sh/setup-uv@v3
 
-      # 4. Install python
+      # 5. Install python
     - name: Set up Python
       run: uv python install
 
-      # 5. Install the project
+      # 6. Install the project
     - name: Install the project
       run: uv sync --all-extras --dev
 
-      # 6. Install missing stub packages
+      # 7. Install missing stub packages
     - name: Install missing type stubs
       run: |
         uv run mypy --install-types --non-interactive .
 
-      # 7. Run Ruff Linter and show all errors
+      # 8. Run Ruff Linter and show all errors
     - name: Run Ruff Linter
       run: |
         echo "${{ needs.check.outputs.changed_files }}" | xargs uv run ruff check --output-format=github --config=pyproject.toml
 
-      # 6. Run Mypy Type Checking and show all errors
+      # 9. Run Mypy Type Checking and show all errors
     - name: Run Mypy Type Checking
       run: |
         echo "${{ needs.check.outputs.changed_files }}" | xargs uv run  mypy --config-file=pyproject.toml
 
-      # 7. Run Pytest
+      # 10. Run Pytest
     - name: Run Pytest
       run: |
         uv run pytest --maxfail=10 --disable-warnings --tb=short
