@@ -20,12 +20,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-      # 3. Export environment variables from .env.example to GitHub Actions
-    - name: Export .env.example to Environment Variables
-      run: |
-        set -o allexport
-        source .env.example
-        set -o allexport
 
       # 4. Get a list of changed .py files
     - name: Get changed files
@@ -62,6 +56,13 @@ jobs:
       # 1. Checkout the code from the repository
     - name: Checkout Code
       uses: actions/checkout@v4
+
+      # 3. Export environment variables from .env.example to GitHub Actions
+    - name: Export .env.example to Environment Variables
+      run: |
+        set -o allexport
+        source .env.example
+        set -o allexport
 
       # 2. Set up the Python environment
     - name: Set up Python ${{ matrix.python-version }}
