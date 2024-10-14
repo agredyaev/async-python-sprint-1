@@ -7,7 +7,8 @@ from src.pipeline.fetch import FetchTask
 from src.schemas.weather_response import WeatherResponse
 
 
-class WeatherResponseFactory(ModelFactory[WeatherResponse]): ...
+class WeatherResponseFactory(ModelFactory[WeatherResponse]):
+    __random_seed__ = 1
 
 
 @pytest.fixture

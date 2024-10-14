@@ -14,7 +14,7 @@ dependencies = [
 description = "Add your description here"
 name = "async-python-sprint-1"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 version = "0.5.0"
 
 [tool.coverage.run]
